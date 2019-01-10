@@ -251,15 +251,17 @@ export default {
 }
 
 @media (min-width: $mobile-large) {
-  .pre-footer-bottom {
-    display: flex;
-    margin-bottom: 10px;
-
-  }
-
-  .swiper-container {
-    width: 50%;
-    margin-bottom: 0;
+  .footer {
+    .pre-footer {
+      .pre-footer-bottom {
+        display: flex;
+        margin-bottom: 10px;
+        .swiper-container {
+          width: 50%;
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 }
 </style>

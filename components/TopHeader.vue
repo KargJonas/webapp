@@ -19,8 +19,13 @@
                 {{ child.name }}
               </sb-link>
             </div>
-            <div class="child">
-              <button @click="login" class="login-button">MEMBER-AREA</button>
+            <div class="child" v-if="isAuthenticated">
+              <nuxt-link to="/me" class="child-nav-item">
+                Mein Profil
+              </nuxt-link>
+            </div>
+            <div class="child" v-else>
+              <button @click="login" class="login-button">LOGIN</button>
             </div>
           </div>
         </div>
@@ -50,6 +55,9 @@ export default {
     },
     home() {
       return this.$store.state.settings.home_navi;
+    },
+    isAuthenticated() {
+      return this.$store.state.auth !== null;
     }
   },
   methods: {
@@ -58,6 +66,11 @@ export default {
     },
     login() {
       this.$store.dispatch('setSidebar', 'login');
+    },
+    logout() {
+      this.$store.dispatch('logout').then(() => {
+        this.$router.push('/');
+      });
     }
   }
 }

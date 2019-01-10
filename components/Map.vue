@@ -121,8 +121,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/assets/scss/styles.scss';
 .map {
-  width: 100%;
+  @include margin-page-wide();
   .gmaps {
     width: 100%;
     height: 70vh;

@@ -70,20 +70,22 @@ export default {
       min-width: 130px;
     }
   }
-}
-
-.level-item:hover {
-  box-shadow: 10px 0 0 $color-yellow;
-  cursor: pointer;
-}
-
-.active {
+  &.active {
     box-shadow: 10px 0 0 $color-blue;
+  }
+  &:hover {
+    box-shadow: 10px 0 0 $color-yellow;
+    cursor: pointer;
+  }
 }
 
 @media (min-width: 420px) {
-  .arrow {
-    width: 180px;
+  .level-item {
+    .text {
+      .arrow {
+        width: 180px;
+      }
+    }
   }
 }
 </style>

@@ -29,6 +29,7 @@ export default {
     flex-direction: row;
     @include margin-page-middle();
     margin-top: 2em;
+    line-height: 1.7;
     .col-left {
       flex-basis: 40%;
       .headline {
@@ -47,12 +48,12 @@ export default {
     .col-right {
       flex-basis: 60%;
       margin-top: 2em;
-      line-height: 1.7;
     }
   }
   @include media-breakpoint-down(md) {
     display: flex;
     flex-direction: column;
+    line-height: 1.7;
     @include margin-page-middle();
     .headline {
       font-size: 3em;
@@ -62,9 +63,6 @@ export default {
     .teaser {
       color: $color-orange;
       margin-bottom: 2em;
-    }
-    .col-right {
-      line-height: 1.7;
     }
   }
 }

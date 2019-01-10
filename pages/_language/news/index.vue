@@ -10,7 +10,7 @@
         >{{source.name}}</checkbox>
     </div>
 
-    <loading v-bind:class="loading ? 'loading loading-active' : 'loading' "/>
+    <loading class="loading" :class="{ active: loading }"/>
     <h1 v-if="!blocks.length" class="no-results">Keine Ergebnisse</h1>
 
     <div class="news-feed" v-for="(block, index) in blocks" v-if="block[1].length" :key="index">
@@ -225,10 +225,9 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   display: none;
-}
-
-.loading-active {
-  display: block;
+  &.active {
+    display: block;
+  }
 }
 
 .news-feed {

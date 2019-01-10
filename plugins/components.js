@@ -95,6 +95,7 @@ Vue.component('text-image', TextImage)
 
 Vue.component('faq-block', FAQBlock)
 Vue.component('faq-item', FAQItem)
+Vue.component('download-item', DownloadItem)
 
 
 Vue.component('level-slider', LevelSlider)

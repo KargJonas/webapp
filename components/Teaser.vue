@@ -21,7 +21,7 @@ export default {
 
 .teaser-item {
   .header {
-    padding: 0 100px;
+    @include margin-page-middle();
     .headline {
       font-size: 3rem;
       text-transform: uppercase;
