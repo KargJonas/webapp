@@ -15,10 +15,6 @@
         <div v-swiper:swiper="swiperOption">
           <div class="swiper-wrapper">
             <img class="swiper-slide" v-for="(logo) in this.logos" :key="logo._uid" :src="logo.image">
-            <!-- <img class="swiper-slide" src="~/assets/img/icons/gg-logo-icon.svg" alt>
-            <img class="swiper-slide" src="~/assets/img/icons/gg-logo-icon.svg" alt>
-            <img class="swiper-slide" src="~/assets/img/icons/gg-logo-icon.svg" alt>
-            <img class="swiper-slide" src="~/assets/img/icons/gg-logo-icon.svg" alt> -->
           </div>
         </div>
       </div>
