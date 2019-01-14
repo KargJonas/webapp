@@ -1,7 +1,7 @@
 import Vuex from 'vuex';
 import auth0 from 'auth0-js';
-
-const Cookie = process.client ? require('js-cookie') : undefined
+import { setToken, unsetToken } from '~/utils/auth'
+import axios from 'axios';
 
 let webAuth = new auth0.WebAuth({
   domain:       'grandgarage.eu.auth0.com',
@@ -43,9 +43,11 @@ const createStore = () => {
     },
     actions: {
       getProfile({ state, commit }) {
+        axios.get('https://dev.grandgarage.eu/.netlify/functions/getProfile').then((r) => {
+          console.log(r);
+        });
         // get profile from fabman
-        let user = {};
-        commit('setUser', user);
+        //commit('setUser', user);
       },
       auth({ commit }, { hash }) {
         return new Promise((resolve, reject) => {
@@ -57,17 +59,15 @@ const createStore = () => {
             //set auth
             let auth = {
               accessToken: authResult.accessToken,
-              fabmanId: authResult.idTokenPayload['https://grandgarage.eu/fabmanId'],
             }
-            Cookie.set('auth', auth)
-            commit('setAuth', auth);
+            setToken(authResult.accessToken);
             resolve();
           });
         });
       },
       logout({ commit }) {
-        Cookie.remove('auth')
         commit('setAuth', null)
+        unsetToken();
       },
       loginUser({ commit }, context) {
         return new Promise((resolve, reject) => {
@@ -75,6 +75,9 @@ const createStore = () => {
             connection: 'Username-Password-Authentication',
             email: context.email,
             password: context.password,
+          }, function (err, r) {
+            if (err) reject(err);
+            resolve(r);
           });
         });
       },

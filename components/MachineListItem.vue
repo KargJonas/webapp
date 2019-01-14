@@ -43,27 +43,31 @@ a {
 
 .machine-list-item {
   display: flex;
+  flex-direction: column;
   margin-bottom: 25px;
   .image {
     flex: 1;
-    max-width: 320px;
+    padding-top: 1.4em;
+    display: flex;
     img {
       display: block;
-      width: 100%;
+      max-height: 30vh;
     }
   }
   .body {
     flex: 2;
-    background-color: #FFF;
-    padding: 20px;
+    padding: 20px 0;
     .title {
       font-family: $font-secondary;
       font-size: 1.8rem;
-      margin-bottom: 20px;
+      margin-bottom: .4em;
+    }
+    .subtitle {
+      margin:  0 0 1em 0;
     }
     .teaser {
       font-family: $font-mono;
-      line-height: 1.2;
+      line-height: 1.4;
       font-size: 0.9rem;
     }
     .cta {

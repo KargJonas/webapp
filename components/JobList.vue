@@ -14,5 +14,7 @@ export default {
 
 <style lang="scss">
 .job-list {
+  margin-left: 4%;
+  margin-right: 4%;
 }
 </style>

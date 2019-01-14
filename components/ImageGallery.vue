@@ -30,5 +30,10 @@ export default {
 .image-gallery {
   display: flex;
   justify-content: center;
+  .lightbox {
+    display: fixed;
+    top: 0;
+    z-index: 10000;
+  }
 }
 </style>

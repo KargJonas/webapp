@@ -1,14 +1,17 @@
 <template>
-  <div class="layout-container">
-    <top-header/>
-    <main id="main" role="main">
+  <div>
+    <div class="login-spacer" v-if="isAuthenticated"></div>
+    <div class="layout-container">
+      <top-header/>
+      <main id="main" role="main">
       <nuxt/>
-    </main>
-    <bottom-footer/>
-    <sidebar />
-    <!--
-    <breadcrumbs />
-    -->
+      </main>
+      <bottom-footer/>
+      <sidebar />
+      <!--
+        <breadcrumbs />
+      -->
+    </div>
   </div>
 </template>
 
@@ -25,6 +28,11 @@ export default {
     Sidebar,
     Breadcrumbs,
   },
+  computed: {
+    isAuthenticated() {
+      return !!this.$store.state.auth;
+    }
+  }
 }
 </script>
 
@@ -72,6 +80,11 @@ a {
 .layout-container {
   margin-top: 65px;
   overflow: hidden;
+}
+
+.login-spacer {
+  height: 26px;
+  display: block;
 }
 
 

@@ -45,7 +45,7 @@ export default {
 @import "@/assets/scss/styles.scss";
 
 .spotlight-slider {
-  margin: 0 -20px;
+  margin: -20px;
   padding: 30px;
   color: #fff;
   .text {

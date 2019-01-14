@@ -52,6 +52,7 @@ export default {
     right: 0;
     height: 100vh;
     max-width: 50vw;
+    overflow: auto;
   }
 }
 

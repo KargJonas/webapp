@@ -21,9 +21,11 @@
           </div>
         </li>
       </ul>
+      <!--
       <div class="images" v-if="machine.images && machine.images.length > 0" >
         <image-gallery :images="machine.images" name="test"></image-gallery>
       </div>
+      -->
     </div>
   </div>
 </template>

@@ -1,5 +1,10 @@
 <template>
   <div class="header-wrapper">
+    <div class="login-header" v-if="isAuthenticated">
+      <nuxt-link to="/me">
+        {{user}}
+      </nuxt-link>
+    </div>
     <header class="top-header">
       <div class="top-header-inner">
         <main-nav-item class="desktop" :item="item" :key="item.id" v-for="item in main">
@@ -14,18 +19,15 @@
             <img src="~/assets/img/icons/gg-logo-icon.svg">
           </nuxt-link>
           <div class="dropdown" v-if="home && home.length > 0">
+            <div class="child" v-if="isAuthenticated">
+            </div>
+            <div class="child" v-else>
+              <button @click="login" class="login-button">LOGIN</button>
+            </div>
             <div v-for="child in home" :key="child.id" class="child">
               <sb-link :link="child.link" class="child-nav-item">
                 {{ child.name }}
               </sb-link>
-            </div>
-            <div class="child" v-if="isAuthenticated">
-              <nuxt-link to="/me" class="child-nav-item">
-                Mein Profil
-              </nuxt-link>
-            </div>
-            <div class="child" v-else>
-              <button @click="login" class="login-button">LOGIN</button>
             </div>
           </div>
         </div>
@@ -56,8 +58,12 @@ export default {
     home() {
       return this.$store.state.settings.home_navi;
     },
+    user() {
+      return "Max Mustermann";
+      //return this.$store.state.user;
+    },
     isAuthenticated() {
-      return this.$store.state.auth !== null;
+      return !!this.$store.state.auth;
     }
   },
   methods: {
@@ -86,6 +92,16 @@ export default {
   z-index: 1000;
   width: 100%;
   max-width: 100%;
+  .login-header {
+    background-color: $color-blue-alt;
+    padding: 5px;
+    color: #FFF;
+    text-align: right;
+    font-size: 0.9em;
+    a {
+      color: #FFF;
+    }
+  }
 }
 
 .top-header {
@@ -201,6 +217,8 @@ export default {
     display: block;
     position: relative;
     top: 0;
+    overflow-y: auto;
+    height: 100vh;
   }
 }
 

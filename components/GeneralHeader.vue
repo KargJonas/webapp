@@ -16,6 +16,8 @@ export default {
 
 <style lang="scss">
 .general-header {
+  margin-left: 4%;
+  margin-right: 4%;
   height: calc(50vh - 89px);
   position: relative;
   .header-image {

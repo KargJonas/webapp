@@ -27,7 +27,7 @@
     <style
        id="style2">
       .cls-1 {
-        fill: #eae222;
+
       }
     </style>
   </defs>
@@ -39,8 +39,8 @@
        data-name="Gruppe 395"
        id="Gruppe_395">
       <rect
-         style="fill:#eae222"
-         y="4890.7764"
+         style="stroke:none;fill:#000000;fill-opacity:1"
+         y="4890"
          x="1677"
          rx="19"
          height="115"

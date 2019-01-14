@@ -1,14 +1,27 @@
 <template>
   <div v-editable="blok" class="about-teaser">
     <div class="teaser-content">
-      <svg class="dot" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100mm" height="100mm" viewBox="0 0 100 100">
-        <defs>
-          <linearGradient id="a"><stop offset="0" stop-color="#ebe223"/><stop offset="1" stop-color="#ebe223" stop-opacity="0"/></linearGradient>
-          <radialGradient xlink:href="#a" id="b" cx="50" cy="63.304" fx="50" fy="63.304" r="50" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 183.696)"></radialGradient>
-        </defs>
-        <circle cx="50" cy="247" r="50" fill="url(#b)" transform="translate(0 -197)" />
+      <svg
+         xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:cc="http://creativecommons.org/ns#"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:svg="http://www.w3.org/2000/svg"
+         xmlns="http://www.w3.org/2000/svg"
+         class="start-down-arrow"
+         version="1.1"
+         viewBox="0 0 100 100"
+         height="100"
+         width="100"
+         onclick="window.scrollTo({top: document.getElementById('start').getBoundingClientRect().top - document.body.getBoundingClientRect().top - 64, left: 0, behavior: 'smooth'})">
+        <g
+           transform="translate(0,-270.54165)">
+          <path
+             d="m 50,270.54165 a 50,50 0 0 0 -50,50 50,50 0 0 0 50,50 50,50 0 0 0 50,-50 50,50 0 0 0 -50,-50 z m -2.576172,13.44531 h 5.160156 v 60.22071 l 13.59961,-13.36329 3.615234,3.67969 -19.984375,19.63867 -19.611328,-19.61132 3.646484,-3.64844 13.574219,13.57422 z"
+             style="opacity:1;vector-effect:none;fill:#eae222;fill-opacity:1;fill-rule:nonzero;paint-order:normal" />
+        </g>
       </svg>
-      <div class="col-start">
+      <div id="start" class="col-start">
         <h2 v-if="blok.headline" class="headline">
           <svg class="circle" xmlns="http://www.w3.org/2000/svg" width="10mm" height="10mm" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.758" fill="none" stroke-width=".5"/></svg>
           {{blok.headline}}
@@ -48,19 +61,27 @@ export default {
     flex-grow: 1;
     background-image: url(~assets/img/about-teaser-bg1.svg);
     background-repeat: repeat-y;
-    background-position: 71%;
+    background-position: 71% -10px;
     background-size: 1.8vw;
-
+    @include media-breakpoint-up(lg) {
+      padding-bottom: 85vh;
+    }
+    @include media-breakpoint-down(sm) {
+      background-size: 12px;
+    }
 
     .col-start {
       display: flex;
       align-items: flex-start;
       margin: 15vh 8vw 0;
       .headline {
-        width: 40vw;
+        font-size: 1.2em;
+        @include media-breakpoint-up(lg) {
+          width: 45vw;
+          font-size: 2.8vw;
+        }
         position: relative;
         margin: 0 3vw;
-        font-size: 2.8vw;
         letter-spacing: 2px;
         line-height: 1.5;
         font-weight: 600;
@@ -81,14 +102,22 @@ export default {
       display: flex;
       justify-content: flex-end;
       .text {
-        width: 35vw;
+        @include media-breakpoint-up(lg) {
+          width: 35vw;
+          margin-right: 10vw;
+          margin-bottom: 10%;
+        }
+        @include media-breakpoint-down(md) {
+          margin: 3vh 15% 10vh;
+          font-size: 1rem;
+          line-height: 1.6;
+        }
         margin-top: 0;
-        margin-right: 10vw;
         font-weight: normal;
         font-family: $font-primary;
-        line-height: 2;
-        font-size: 1.0rem;
-        letter-spacing: 1.6px;
+        line-height: 1.6;
+        font-size: 1.4vw;
+        letter-spacing: .03em;
       }
     }
     /*
@@ -111,11 +140,15 @@ export default {
     }
     */
   }
-  .dot {
+  .start-down-arrow {
+    width: 18vh;
+    max-width: 20vw;
+    height: 18vh;
+    max-height: 20vw;
     position: absolute;
-    right: 0;
-    transform: scale(1.2) translateX(-75px) translateY(-200px);
-    z-index: 2;
+    right: 13%;
+    margin-top: -2vh;
+    cursor: pointer;
   }
 }
 </style>

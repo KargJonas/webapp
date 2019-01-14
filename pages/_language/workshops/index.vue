@@ -165,7 +165,7 @@ export default {
 
     .search {
       display: flex;
-      padding: 10px;
+      margin: 0 4%;
       padding-bottom: 5rem;
       input[type="text"] {
         flex: 1;
@@ -190,8 +190,8 @@ export default {
     }
   }
   .workshop-list-wrapper {
+    margin: 0 4%;
     display: flex;
-    padding: 20px;
     .workshop-list {
       flex: 3;
       .list-item {

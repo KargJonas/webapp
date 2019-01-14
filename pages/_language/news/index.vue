@@ -26,6 +26,7 @@
       <div class="items">
         <transition-group name="items-transition">
           <news-feed-item
+            v-if="block[1].length == 1"
             v-for="item in block[1]"
             :news="item.content"
             :key="item.id"

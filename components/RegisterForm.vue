@@ -28,37 +28,41 @@
       </div>
       <div class="form-item">
         <span class="label">Passwort</span>
-        <input type="password" v-model="password" placeholder="" @input="checkPassword" />
-      </div>
-      <div v-if="showPasswordError" class="form-item password-status">
-        <span class="bad" v-if="!passwordValid">Passwörter stimmen nicht überein</span>
+        <div class="password-wrapper">
+          <input type="password" v-model="password" placeholder="" @input="checkPassword" />
+          <div v-if="showPasswordError" class="form-item password-status">
+          </div>
+        </div>
       </div>
       <div class="form-item">
         <span class="label">Passwort (wiederholen)</span>
         <input type="password" v-model="passwordRepeat" placeholder="" />
+        <div class="password-error">
+          <span class="bad" v-if="!passwordValid">Passwörter stimmen nicht überein</span>
+        </div>
       </div>
       <div class="checkbox-item">
         <div class="checkbox-wrapper">
           <input type="checkbox" id="agb" v-model="agb" />
         </div>
-        <label for="agb">AGB</label>
+        <label for="agb">Ich habe die <nuxt-link :to="'/agb'">Teilnahmebedingungen / AGB</nuxt-link> gelesen und bin damit einverstanden.</label>
       </div>
       <div class="checkbox-item">
         <div class="checkbox-wrapper">
           <input type="checkbox" id="dsg" v-model="dsg" />
         </div>
-        <label for="dsg">Datenschutzbestimmungen</label>
+        <label for="dsg">Ich habe die <nuxt-link :to="'/datenschutz'">Datenschutzerklärung</nuxt-link> gelesen und bin damit einverstanden.</label>
       </div>
       <div class="checkbox-item">
         <div class="checkbox-wrapper">
           <input type="checkbox" id="newsletter" v-model="newsletter" />
         </div>
-        <label for="newsletter">Newsletter</label>
+        <label for="newsletter">Ich bin damit einverstanden, Newsletter an meine angegebene E-Mail Adresse zu erhalten.</label>
       </div>
       <div class="form-item error-message" v-if="errorMessage">
         <span>{{errorMessage}}</span>
       </div>
-      <div class="form-item">
+      <div class="form-item button-row">
         <button :disabled="!formValid" @click="submit">Registrieren</button>
       </div>
     </div>
@@ -176,6 +180,7 @@ export default {
     .info {
       margin: 20px 0;
       font-size: 0.9em;
+      line-height: 1.3;
     }
     .subtitle {
       font-size: 0.9rem;
@@ -188,27 +193,53 @@ export default {
     }
   }
   .form-item {
-    padding: 10px;
-    display: flex;
+    padding: 0 0 18px;
+    display: grid;
+    grid-template-columns: 28% 72%;
+    align-items: center;
     .label {
-      flex: 1;
-      max-width: 200px;
       font-weight: bold;
+      text-transform: uppercase;
+      font-size: .7em;
     }
     input {
       outline: none;
-      flex: 4;
+      flex-grow: 1;
       padding: 5px 10px;
-      border: 1px solid #ccc;
+      background: #fff;
+      border: 1px solid #fff;
+      width: 100%;
       &:focus {
         border-color: $color-orange;
       }
+    }
+    .password-wrapper {
+      position: relative;
+      .password-status {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        background-color: $color-orange;
+        height: .5em;
+        width: .5em;
+        padding: 0;
+        margin-top: -.25em;
+        border-radius: 50%
+      }
+    }
+    .password-error {
+      grid-column: 2;
+    }
+    &.button-row {
+      display: flex;
+      justify-content: flex-end;
     }
     button {
       background-color: $color-orange;
       color: #FFF;
       border: 1px solid lighten($color-orange, 10);
-      padding: 5px 10px;
+      padding: 7px 13px 9px;
+      line-height: 1;
       outline: none;
       &:focus {
         background-color: lighten($color-orange, 10);
@@ -219,20 +250,28 @@ export default {
         cursor: not-allowed;
       }
     }
+    .bad {
+      color: $color-orange;
+      font-size: .7em;
+      font-weight: bold;
+    }
   }
   .checkbox-item {
-    padding: 10px;
+    padding: 8px 0;
     display: flex;
     .checkbox-wrapper {
-      padding-right: 20px;
+      padding-right: .5em;
       outline: none;
-      text-align: right;
       user-select: none;
-      flex: 1;
       max-width: 180px;
     }
     label {
       user-select: none;
+      flex: 1;
+      font-size: .7em;
+      letter-spacing: .03em;
+      line-height: 1.2;
+      font-weight: 700;
     }
   }
   .disclaimer {

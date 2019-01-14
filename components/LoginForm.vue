@@ -14,10 +14,10 @@
       <span class="label">Password</span>
       <input class="input" type="password" v-model="password" placeholder="dein passwort" @input="clearErrorMessage" />
     </div>
-    <div class="form-item error-message" v-if="errorMessage">
+    <div class="error-message" v-if="errorMessage">
       <span>{{errorMessage}}</span>
     </div>
-    <div class="form-item">
+    <div class="form-item button-row">
       <button @click="submit">Login</button>
     </div>
   </div>
@@ -47,7 +47,7 @@ export default {
       this.$store.dispatch('loginUser', data).then((r) => {
         console.log(r);
       }).catch((e) => {
-        console.log(e);
+        this.errorMessage = e.description || e.error || e.code;
       });
     },
     clearErrorMessage() {
@@ -83,28 +83,36 @@ export default {
     }
   }
   .form-item {
-    padding: 10px;
-    display: flex;
+    padding: 0 0 18px;
+    display: grid;
+    grid-template-columns: 28% 72%;
+    align-items: center;
     .label {
-      flex: 1;
-      max-width: 200px;
       font-weight: bold;
+      text-transform: uppercase;
+      font-size: .7em;
     }
     .input {
       outline: none;
-      border: 1px solid #ccc;
-      flex: 4;
+      border: 1px solid #fff;
+      flex-grow: 1;
       padding: 5px 10px;
       &:focus {
         border-color: $color-orange;
       }
     }
+    &.button-row {
+      display: flex;
+      justify-content: flex-end;
+    }
     button {
       cursor: pointer;
       background-color: $color-orange;
       color: #FFF;
+      min-width: 30%;
       border: 1px solid lighten($color-orange, 10);
-      padding: 5px 10px;
+      padding: 7px 12px 8px;
+      line-height: 1;
       outline: none;
       &:focus {
         background-color: lighten($color-orange, 10);
@@ -127,6 +135,10 @@ export default {
     }
   }
   .error-message {
+    font-size: 14px;
+    font-family: $font-mono;
+    padding: 5px 0;
+    display: flex;
     color: red;
   }
 }

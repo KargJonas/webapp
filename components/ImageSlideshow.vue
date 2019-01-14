@@ -55,7 +55,6 @@ export default {
     margin: 0 -20px;
     padding: 0 30px;
   }
-  // class via javascript
   .swiper-container {
     height: 50vh;
     .swiper-slide {
