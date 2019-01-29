@@ -65,5 +65,14 @@ export default {
       margin-bottom: 2em;
     }
   }
+  @include media-breakpoint-down(sm) {
+    .headline {
+      font-size: 1.8em;
+      line-height: 1.3;
+    }
+    .teaser {
+      font-size: .85em;
+    }
+  }
 }
 </style>

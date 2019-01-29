@@ -3,3 +3,7 @@
   publish = "dist"
   command = "npm run generate"
   functions = "functions/"
+
+[context.branch-deploy]
+  [context.production.environment]
+    ORIGIN = "https://staging.grandgarage.eu"

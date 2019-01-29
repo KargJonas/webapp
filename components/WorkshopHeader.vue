@@ -15,8 +15,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/styles.scss';
+
 .header {
-  height: calc(100vh - 89px);
+  margin: 0 4%;
+
+  height: calc(72vh - 64px);
+
   position: relative;
   .header-image {
     height: 100%;
@@ -35,6 +40,22 @@ export default {
       font-size: 3rem;
       font-family: 'Chakra Petch';
       font-weight: bold;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    height: auto;
+    .header-image {
+      height: 33vh;
+    }
+    .header-title {
+      position: relative;
+      padding: 5%;
+      text-align: right;
+      h4 {
+        font-size: 2rem;
+      }
+
     }
   }
 }

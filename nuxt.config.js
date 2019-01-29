@@ -27,10 +27,21 @@ module.exports = {
       }
     ]
   },
+  proxy: {
+    '/.netlify': {
+      target: 'http://localhost:9000',
+      pathRewrite: {'^/.netlify/functions': ''},
+    },
+  },
   modules: [
-    ['storyblok-nuxt', { accessToken: '1IsgW07t4t5sm0UzdHAD6gtt', cacheProvider: 'memory' }]
+    ['storyblok-nuxt', { accessToken: '1IsgW07t4t5sm0UzdHAD6gtt', cacheProvider: 'memory' }],
+    '@nuxtjs/proxy',
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-106370674-4'
+    }]
   ],
   plugins: [
+    '~/plugins/init',
     '~/plugins/components',
     '~/plugins/helper',
     '~/plugins/map',
@@ -40,7 +51,7 @@ module.exports = {
     { src: '~/plugins/swiper', ssr: false }
   ],
   router: {
-    middleware: 'languageDetection'
+    middleware: 'router'
   },
   generate: {
     routes: function (callback) {
@@ -85,9 +96,9 @@ module.exports = {
 
           callback(null, routes)
         })).catch(callback)
-      })
-    }
-  },
+    })
+  }
+},
   css: [
     '@/assets/scss/styles.scss',
     '@/assets/scss/vueDatePick.scss',

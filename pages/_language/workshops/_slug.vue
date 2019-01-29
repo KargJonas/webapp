@@ -3,9 +3,6 @@
     <workshop-header :blok="workshop"></workshop-header>
     <div v-editable="story.content" class="workshop">
       <workshop-info :blok="workshop"></workshop-info>
-      <div class="info">
-        <markdown v-if="workshop.info" class="markdown" :value="workshop.info"></markdown>
-      </div>
     </div>
   </section>
 </template>

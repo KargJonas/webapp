@@ -1,14 +1,16 @@
 import Vuex from 'vuex';
 import auth0 from 'auth0-js';
-import { setToken, unsetToken } from '~/utils/auth'
+import { setToken, unsetToken, getUserFromLocalStorage } from '~/utils/auth';
 import axios from 'axios';
 
+const origin = process.client ? window.location.origin : process.env.ORIGIN;
+
 let webAuth = new auth0.WebAuth({
-  domain:       'grandgarage.eu.auth0.com',
+  domain:       'auth.grandgarage.eu',
   clientID:     'lwqb_LrkbU8b2rHfbC05C87xqM4bSfms',
+  audience:     'https://api.grandgarage.eu/',
   responseType: 'token id_token',
-  redirectUri:  'https://dev.grandgarage.eu/auth'
-  //redirectUri:  'http://localhost:3000/auth'
+  redirectUri:  origin + '/auth'
 });
 
 let version = 'draft';
@@ -22,14 +24,29 @@ const createStore = () => {
       sidebar: null,
       settings: {},
       user: null,
-      auth: null
+      auth: null,
+      fabman: null,
+    },
+    getters: {
+      getPackageById: (state) => (id) => {
+        return state.fabman.packages.find(p => p.id === id);
+      },
+      getTrainingById: (state) => (id) => {
+        return state.fabman.trainings.find(t => t.id === id);
+      },
+      getResourceById: (state) => (id) => {
+        return state.fabman.resources.find(r => r.id === id);
+      }
     },
     mutations: {
       setAuth(state, auth) {
-        state.auth = auth
+        state.auth = auth;
       },
       setUser (state, user) {
         state.user = user;
+      },
+      setFabman (state, data) {
+        state.fabman = data;
       },
       setSettings (state, settings) {
         state.settings = settings;
@@ -42,12 +59,76 @@ const createStore = () => {
       }
     },
     actions: {
-      getProfile({ state, commit }) {
-        axios.get('https://dev.grandgarage.eu/.netlify/functions/getProfile').then((r) => {
-          console.log(r);
+      nuxtServerInit({ state }, context) {
+      },
+      init({ state, dispatch }, context) {
+        let chain = [];
+        if (!state.auth) {
+          chain.push(dispatch('checkAuth'));
+        } else {
+          if (!state.user) {
+            chain.push(dispatch('getUser'));
+          } else {
+            chain.push(dispatch('getData'));
+          }
+        }
+        return Promise.all(chain);
+      },
+      checkStatus({ state }, id) {
+        return axios.get(`${origin}/.netlify/functions/checkStatus\?id\=${id}`).then((r) => {
+          return r.data;
+        }).catch((err) => {
+          console.log(err);
         });
-        // get profile from fabman
-        //commit('setUser', user);
+      },
+      getFabman({ state, commit }) {
+        return axios.get(`${origin}/.netlify/functions/getFabman`).then((r) => {
+          commit('setFabman', r.data);
+        }).catch((err) => {
+          console.log(err);
+        });
+        /*
+        let p = axios.get(`${origin}/.netlify/functions/getPackages`).then(r => r.data);
+        let t = axios.get(`${origin}/.netlify/functions/getTrainings`).then(r => r.data);
+        return Promise.all([p, t]).then(([packages, trainings]) => {
+          commit('setPackages', packages);
+          commit('setTrainings', trainings);
+        });
+        */
+      },
+      getUser({ state, commit, dispatch }) {
+        return axios.get(`${origin}/.netlify/functions/getUser`).then((r) => {
+          commit('setUser', r.data);
+          return dispatch('getFabman');
+        }).catch((err) => {
+          console.log(err);
+        });
+      },
+      checkAuth({ commit, dispatch, state }) {
+        if (state.auth || getUserFromLocalStorage()) {
+          // renew Token
+          return new Promise((resolve, reject) => {
+            webAuth.checkSession({}, function (err, authResult) {
+              if (err) {
+                unsetToken();
+                return reject(err);
+              }
+              if (authResult && authResult.accessToken) {
+                //set auth
+                let auth = {
+                  accessToken: authResult.accessToken,
+                }
+                setToken(authResult.accessToken);
+                commit('setAuth', auth);
+                resolve();
+              }
+            });
+          }).then(() => {
+            if (!state.user) {
+              return dispatch('getUser');
+            }
+          });
+        }
       },
       auth({ commit }, { hash }) {
         return new Promise((resolve, reject) => {
@@ -138,7 +219,6 @@ const createStore = () => {
       },
       loadMachineItem ({state}, slug) {
         let endpoint = `cdn/stories/${state.language}/machines/${slug}`;
-        // TODO: entich with tags
         return this.$storyapi.get(endpoint, {
           version: version,
           cv: state.cacheVersion

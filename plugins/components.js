@@ -43,15 +43,29 @@ import TextImage from '~/components/TextImage.vue'
 
 import LoginForm from '~/components/LoginForm.vue'
 import RegisterForm from '~/components/RegisterForm.vue'
+import RegisterSuccessForm from '~/components/RegisterSuccessForm.vue'
 
 import StoryBlokLink from '~/components/StoryBlokLink.vue'
 import MainNavItem from '~/components/MainNavItem.vue'
+import MainNavMobileItem from '~/components/MainNavMobileItem.vue'
+
 import Markdown from '~/components/Markdown.vue'
 import Loading from '~/components/Loading.vue'
+import LoadingSpinner from '~/components/LoadingSpinner.vue'
 import Checkbox from '~/components/Checkbox.vue'
 
 import LevelSlider from '~/components/LevelSlider.vue'
 import LevelItem from '~/components/LevelItem.vue'
+
+import Package from '~/components/Package.vue'
+import Training from '~/components/Training.vue'
+
+import ExtrasGrid from '~/components/ExtrasGrid.vue'
+import ExtraItem from '~/components/ExtraItem.vue'
+import Icon from '~/components/Icon.vue'
+
+import PriceTable from '~/components/PriceTable.vue'
+import PriceTableItem from '~/components/PriceTableItem.vue'
 
 Vue.component('page', Page)
 Vue.component('general-header', GeneralHeader)
@@ -78,6 +92,9 @@ Vue.component('workshop-header', WorkshopHeader)
 Vue.component('workshop-info', WorkshopInfo)
 Vue.component('workshop-list-item', WorkshopListItem)
 
+Vue.component('package', Package)
+Vue.component('training', Training)
+
 Vue.component('machine-list-item', MachineListItem)
 Vue.component('machine', Machine)
 Vue.component('job-teaser', JobTeaser)
@@ -86,6 +103,7 @@ Vue.component('job-opening', JobOpening)
 
 Vue.component('login-form', LoginForm)
 Vue.component('register-form', RegisterForm)
+Vue.component('register-success-form', RegisterSuccessForm)
 
 Vue.component('spotlight-slider', SpotlightSlider)
 Vue.component('image-gallery', ImageGallery)
@@ -97,6 +115,12 @@ Vue.component('faq-block', FAQBlock)
 Vue.component('faq-item', FAQItem)
 Vue.component('download-item', DownloadItem)
 
+Vue.component('extras-grid', ExtrasGrid)
+Vue.component('extra-item', ExtraItem)
+Vue.component('icon', Icon)
+
+Vue.component('price-table', PriceTable)
+Vue.component('price-table-item', PriceTableItem)
 
 Vue.component('level-slider', LevelSlider)
 Vue.component('level-item', LevelItem)
@@ -105,8 +129,10 @@ Vue.component('level-item', LevelItem)
 Vue.component('location-description', LocationDescription)
 
 Vue.component('main-nav-item', MainNavItem)
+Vue.component('main-nav-mobile-item', MainNavMobileItem)
 Vue.component('sb-link', StoryBlokLink)
 Vue.component('markdown', Markdown)
 
 Vue.component('loading', Loading)
+Vue.component('loading-spinner', LoadingSpinner)
 Vue.component('checkbox', Checkbox)

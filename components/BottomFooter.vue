@@ -11,31 +11,36 @@
       </div>
       <div class="pre-footer-bottom">
         <div class="col text">Innovationswerkstatt für Menschen, Wissen und Technologie</div>
-
-        <div v-swiper:swiper="swiperOption">
-          <div class="swiper-wrapper">
-            <img class="swiper-slide" v-for="(logo) in this.logos" :key="logo._uid" :src="logo.image">
+        <div class="col logos">
+          <div v-swiper:swiper="swiperOption">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="(logo) in this.logos" :key="logo._uid">
+                <img :src="$resizeImage(logo.image, '200x0')">
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="background-footer">
       <div class="background-footer-content">
-        <div class="newsletter-footer">
+        <!--
+          <div class="newsletter-footer">
           <h4>Immer am Ball bleiben</h4>
           <div class="newsletter-subscribe">
-            <input type="email" placeholder="Deine E-Mail Adresse">
-            <button>Meld mich an</button>
+          <input type="email" placeholder="Deine E-Mail Adresse">
+          <button>Meld mich an</button>
           </div>
-        </div>
+          </div>
+        -->
         <div class="bottom-footer">
           <div class="footer-navigation">
             <div
-              class="nav-item"
-              :key="index"
-              v-for="(navitem, index) in $store.state.settings.footer_navi"
-            >
-              <sb-link :link="navitem.link">{{navitem.name}}</sb-link>
+               class="nav-item"
+               :key="index"
+               v-for="(navitem, index) in $store.state.settings.footer_navi"
+               >
+               <sb-link :link="navitem.link">{{navitem.name}}</sb-link>
             </div>
           </div>
           <div class="spacer"></div>
@@ -53,21 +58,67 @@
 <script charset="utf-8">
 export default {
   data() {
-    return {
-      swiperOption: {
-        slidesPerView: 4,
+    return {}
+  },
+  methods: {
+    shuffle(arra1) {
+      let ctr = arra1.length;
+      let temp;
+      let index;
+
+      while (ctr > 0) {
+        index = Math.floor(Math.random() * ctr);
+        ctr--;
+        temp = arra1[ctr];
+        arra1[ctr] = arra1[index];
+        arra1[index] = temp;
+      }
+      return arra1;
+    }
+  },
+  computed: {
+    logos() {
+      return this.shuffle(this.$store.state.settings.footer_logos);
+    },
+    num() {
+      if (process.client && window && window.innerWidth) {
+        if (window.innerWidth < 576) {
+          return 4;
+        }
+        if (window.innerWidth < 786) {
+          return 8;
+        }
+        if (window.innerWidth < 1366) {
+          return 6;
+        }
+      }
+      return 8;
+    },
+    spaceBetween() {
+      if (process.client && window && window.innerWidth) {
+        if (window.innerWidth < 576) {
+          return 20;
+        }
+        if (window.innerWidth < 786) {
+          return 30;
+        }
+        if (window.innerWidth < 1366) {
+          return 40;
+        }
+      }
+      return 50;
+    },
+    swiperOption() {
+      return {
+        slidesPerView: this.num,
+        spaceBetween: this.spaceBetween,
+        freeMode: true,
         autoplay: {
           delay: 2000,
           disableOnInteraction: false
         },
         loop: true
       }
-    };
-  },
-
-  computed: {
-    logos() {
-      return this.$store.state.settings.footer_logos;
     }
   }
 };
@@ -88,7 +139,7 @@ export default {
       z-index: 0;
       fill: #fff;
       position: relative;
-      transform: scale(5) translateX(75%) translateY(50%);
+      transform: scale(5) translateX(50%) translateY(50%);
       left: 0;
     }
     .pre-footer-top {
@@ -98,6 +149,9 @@ export default {
       justify-content: center;
       .logo {
         width: 25%;
+        @include media-breakpoint-down(sm) {
+          width: 50%;
+        }
         img {
           max-width: 100%;
           display: block;
@@ -105,41 +159,39 @@ export default {
       }
     }
     .pre-footer-bottom {
+      height: 8em;
+      display: flex;
+      @include media-breakpoint-down(sm) {
+        flex-direction: column;
+      }
       z-index: 1;
       margin-bottom: 10px;
 
-      @include media-breakpoint-down(md) {
-        flex-direction: column;
-      }
-
-      .swiper-container {
-        // width: 50%;
-
-        .swiper-wrapper {
-          img {
-            margin: 0 20px;
-            height: 40px;
-            width: auto;
-          }
-        }
-      }
-
       .col {
-        padding: 25px;
         flex: 1;
-
+        padding: 0 25px;
+        @include media-breakpoint-up(md) {
+          width: 50%;
+        }
         &.text {
           text-transform: uppercase;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           text-align: center;
         }
         &.logos {
           display: flex;
-          img {
-            flex: 1;
-            max-width: 100%;
-            display: block;
-            height: auto;
-            max-height: 40px;
+          .swiper-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            img {
+              height: auto;
+              width: 100%;
+              display: block;
+              height: auto;
+            }
           }
         }
       }
@@ -199,10 +251,6 @@ export default {
             background: none;
             border: none;
             outline: none;
-            // &:active,
-            // &:hover,
-            // &:focus {
-            // }
           }
         }
       }
@@ -228,37 +276,13 @@ export default {
           flex: 1;
         }
         .info-item {
+          padding: 15px;
           h4 {
             text-transform: uppercase;
           }
           p {
             font-family: $font-secondary;
           }
-        }
-      }
-    }
-  }
-}
-
-@keyframes slide {
-  0% {
-    margin-left: 0;
-  }
-
-  100% {
-    margin-left: -200%;
-  }
-}
-
-@media (min-width: $mobile-large) {
-  .footer {
-    .pre-footer {
-      .pre-footer-bottom {
-        display: flex;
-        margin-bottom: 10px;
-        .swiper-container {
-          width: 50%;
-          margin-bottom: 0;
         }
       }
     }

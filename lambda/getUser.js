@@ -5,7 +5,7 @@ const jwksClient = require('jwks-rsa');
 
 const baseURL = 'https://fabman.io/api/v1/';
 
-// TODO: a hell more of exception handling
+// TODO: a hell more of exception handling and general hardening
 exports.handler = function(event, context, callback) {
   let token = null;
   if (event.headers.cookie) {
@@ -42,25 +42,29 @@ exports.handler = function(event, context, callback) {
     if (!err) {
       let fabmanId = decoded['https://grandgarage.eu/fabmanId'];
 
-      console.log('token', process.env.FABMAN_TOKEN);
-
       const instance = axios.create({
         baseURL,
         headers: {'Authorization': `Bearer ${process.env.FABMAN_TOKEN}`}
       });
 
-      instance.get(`members/${fabmanId}`).then((r) => {
+      let profile = instance.get(`members/${fabmanId}`).then(r => r.data);
+      let trainings = instance.get(`members/${fabmanId}/trainings`).then(r => r.data);
+      let packages = instance.get(`members/${fabmanId}/packages`).then(r => r.data);
+
+      Promise.all([profile, trainings, packages]).then(([profile, trainings, packages]) => {
+        let user = { profile, trainings, packages };
         callback(null, {
           statusCode: 200,
-          body: JSON.stringify(r.data)
+          body: JSON.stringify(user)
         });
-      }).catch((e) => {
-        console.log(e);
+      }).catch((err) => {
+        console.log(err);
         callback(null, {
           statusCode: 500,
           body: 'ERROR'
         });
       });
+
     } else {
       console.log(err);
       callback(null, {

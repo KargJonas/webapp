@@ -7,11 +7,6 @@
           <div class="info">
             <p class="title">{{member.title}}</p>
 
-            <div class="phone" v-if="member.phone">
-              <img src="~/assets/img/icons/phone.svg">
-              <p>{{member.phone}}</p>
-            </div>
-
             <div class="email" v-if="member.email">
               <img src="~/assets/img/icons/envelope.svg">
               <p>{{member.email}}</p>
@@ -41,31 +36,38 @@ export default {
 
 .preview-wrapper {
   width: 100%;
-  min-height: 150px;
   display: flex;
   justify-content: center;
-
-  .email {
-    visibility: hidden;
+  @include media-breakpoint-up(md) {
+    min-height: 130px;
   }
-
-  .phone {
+  .phone, .email {
     display: none;
   }
 
+
   .member-preview {
     width: 100%;
+    position: relative;
+    @include media-breakpoint-down(sm) {
 
-    .phone {
-      display: none;
-    }
-
-    .email {
-      display: flex;
+      padding: 3vh 0;
+      border-bottom: 1px dashed #aaa;
+      &:before {
+        content: "";
+        position: absolute;
+        border-top: #000 0.15em solid;
+        border-right: #000 0.15em solid;
+        transform: rotateZ(45deg);
+        transform-origin: top right;
+        height: .3em;
+        width: .3em;
+        right: 2%;
+        top: 50%;
+      }
     }
 
     .phone, .email {
-
       img {
         margin: 7px 15px 0 0;
         width: auto;
@@ -79,7 +81,7 @@ export default {
       text-decoration: none;
       color: #000;
 
-      @media (min-width: $mobile-small) {
+      @include media-breakpoint-up(md) {
         padding: 30px;
       }
 
@@ -105,20 +107,17 @@ export default {
       }
     }
   }
+  @include media-breakpoint-up(md) {
+    .member-preview:hover {
+      background-color: $color-yellow;
 
-  .member-preview:hover {
-    background-color: $color-yellow;
+      .title {
+        display: none;
+      }
 
-    .title {
-      display: none;
-    }
-
-    .phone {
-      display: flex;
-    }
-
-    .email {
-      visibility: visible;
+      .phone, .email {
+        display: flex;
+      }
     }
   }
 }

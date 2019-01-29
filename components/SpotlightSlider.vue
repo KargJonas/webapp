@@ -20,24 +20,39 @@
 
 <script>
 export default {
-  props: ["blok"],
-  data() {
-    return {
-      swiperOption: {
-        slidesPerView: 3,
-        spaceBetween: 30,
+  props: ['blok'],
+  computed: {
+    swiperOption() {
+      return {
+        slidesPerView: this.num,
+        spaceBetween: this.spaceBetween,
         autoplay: {
           delay: 5000,
           disableOnInteraction: true
         },
         navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
         }
       }
-    };
-  },
-  methods: {}
+    },
+    spaceBetween() {
+      if (process.client && window && window.innerWidth) {
+        if (window.innerWidth < 786) {
+          return 0;
+        }
+      }
+      return 30;
+    },
+    num() {
+      if (process.client && window && window.innerWidth) {
+        if (window.innerWidth < 786) {
+          return 1;
+        }
+      }
+      return 3;
+    },
+  }
 };
 </script>
 
@@ -58,6 +73,7 @@ export default {
     height: 50vh;
     width: 100%;
     .swiper-slide {
+      display: block;
       background-size: contain;
       background-position: center;
       background-repeat: no-repeat;
@@ -68,12 +84,14 @@ export default {
         }
       }
       .swiper-item-content {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
         transition: opacity ease-in-out .3s;
         opacity: 0;
         display: flex;
         align-items: center;
         line-height: 1.2;
-        height: 100%;
         background-color: $color-blue;
         padding: 10px;
       }

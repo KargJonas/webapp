@@ -31,7 +31,7 @@ export default {
 @import '@/assets/scss/styles.scss';
 
 .download-item {
-  margin-bottom: .4rem;
+  margin-bottom: 1rem;
   .filelink {
     color: inherit;
   }

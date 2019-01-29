@@ -13,7 +13,7 @@
         <markdown :value="blok.content"></markdown>
       </div>
       <div class="image-wrapper">
-        <img class="image" :src="blok.image" alt=""/>
+        <img class="image" :src="$resizeImage(blok.image, '950x0')" alt=""/>
       </div>
     </div>
   </div>

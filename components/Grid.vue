@@ -11,8 +11,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/styles.scss';
+
 .grid {
   display: flex;
+  @include margin-page-wide();
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+  }
   justify-content: center;
 }
 </style>

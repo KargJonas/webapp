@@ -166,7 +166,8 @@ export default {
     .search {
       display: flex;
       margin: 0 4%;
-      padding-bottom: 5rem;
+      padding-top: 1rem;
+      padding-bottom: 4rem;
       input[type="text"] {
         flex: 1;
         display: block;

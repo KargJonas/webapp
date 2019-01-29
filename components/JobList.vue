@@ -16,5 +16,6 @@ export default {
 .job-list {
   margin-left: 4%;
   margin-right: 4%;
+  margin-top: 6em;
 }
 </style>

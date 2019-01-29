@@ -40,6 +40,7 @@
 export default {
   props: ['blok'],
   created() {
+    this.selected = this.blok.items[0]._uid;
   },
   data() {
     return {
@@ -99,7 +100,7 @@ export default {
           margin: 0;
           font-size: 4vw;
           line-height: 1.3;
-          width: 40vw;
+          width: 42vw;
         }
         @include media-breakpoint-down(md) {
           height: inherit;
@@ -127,9 +128,6 @@ export default {
           justify-content: stretch;
           letter-spacing: 0.03em;
           transition: color .3s linear;
-          &:hover {
-            color: $color-blue-intro;
-          }
           @include media-breakpoint-up(lg) {
             font-size: 1.5vw;
             .arrow {
@@ -149,6 +147,7 @@ export default {
               }
             }
             &.is-selected {
+              color: $color-blue-intro;
               .arrow {
                 display: block;
                 align-self: stretch;
@@ -188,6 +187,7 @@ export default {
               }
             }
             &.is-selected {
+              color: $color-blue-intro;
               .arrow {
                 transition: width .3s linear, height .2s linear .3s;
                 display: block;

@@ -10,12 +10,18 @@
       </div>
       <div class="title">{{machine.title}}</div>
       <div class="subtitle">{{machine.subtitle}}</div>
+      <machine-status class="status" v-if="machine.fabmanId && hasUser" :id="machine.fabmanId"></machine-status>
     </div>
   </div>
 </template>
 
 <script>
+import MachineStatus from '@/components/MachineStatus';
+
 export default {
+  components: {
+    MachineStatus
+  },
   props: ['story'],
   computed: {
     machine() {
@@ -23,6 +29,9 @@ export default {
     },
     tags() {
       return this.story.tag_list;
+    },
+    hasUser() {
+      return !!this.$store.state.user;
     }
   }
 }
@@ -83,6 +92,11 @@ export default {
     .subtitle {
       font-size: .9rem;
       letter-spacing: .05em;
+    }
+    .status {
+      position: absolute;
+      top: 0;
+      right: 0;
     }
   }
 }

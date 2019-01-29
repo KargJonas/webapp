@@ -1,12 +1,12 @@
 <template>
-  <div v-editable="news" v-bind:class="'news-feed-item ' + type || 'vertical'">
+  <div v-editable="news" :class="'news-feed-item ' + type || 'vertical'">
     <div class="top">
       <a :href="link" target="_blank">
         <div class="header">
           <p class="date" v-if="news.datetime">{{date}}</p>
-          <img v-if="news.source" class="source-img" :src="$resizeImage(`/icons/${news.source}.png`, '700x0')">
+          <img v-if="news.source" class="source-img" :src="`/icons/${news.source}.png`">
         </div>
-        <img class="image" :src="news.image">
+        <img class="image" :src="$resizeImage(news.image, '600x0')">
       </a>
     </div>
 
@@ -14,7 +14,7 @@
       <a :href="link" target="_blank">
         <div class="header">
           <p class="date" v-if="news.datetime">{{date}}</p>
-          <img v-if="news.source" class="source-img" :src="$resizeImage(`/icons/${news.source}.png`, '700x0')">
+          <img v-if="news.source" class="source-img" :src="`/icons/${news.source}.png`">
         </div>
 
         <h4 class="title">{{news.title}}</h4>
@@ -84,10 +84,7 @@ export default {
     .source-img {
       height: 1em;
       width: auto;
-    }
-
-    .date {
-      margin-right: 20px;
+      margin-left: 20px;
     }
 
     p {
@@ -98,7 +95,8 @@ export default {
   }
 
   .image {
-    width: 100%;
+    max-width: 100%;
+    max-height: 50vh;
   }
 }
 
@@ -107,7 +105,6 @@ export default {
     .top .header {
       display: none;
     }
-
     .bot .header {
       display: flex;
     }

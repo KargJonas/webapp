@@ -18,7 +18,7 @@
               <div class="subtitle">{{blok.subtitle}}</div>
             </div>
             <div class="col-button">
-              <button class="apply-button">Bewerben</button>
+              <a href="mailto:office@grandgarage.eu"class="apply-button">Bewerben</a>
             </div>
           </div>
           <markdown :value="blok.description"></markdown>
@@ -78,6 +78,9 @@ export default {
     .header {
       padding: 20px 0;
       display: flex;
+      @include media-breakpoint-down(sm) {
+          flex-direction: column;
+      }
       .col-title {
         flex: 1;
         .title {
@@ -91,6 +94,7 @@ export default {
         }
       }
       .col-button {
+
         .apply-button {
           font-size: 1.2rem;
           text-transform: uppercase;
@@ -100,6 +104,11 @@ export default {
           background-color: $color-orange;
           color: #FFF;
           cursor: pointer;
+          display: inline-block;
+          margin-top: .2rem;
+          @include media-breakpoint-down(sm) {
+            margin-top: 1rem;
+          }
         }
       }
     }

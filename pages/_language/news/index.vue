@@ -280,6 +280,9 @@ export default {
     text-align: right;
     margin-right: 100px;
     width: 50%;
+    .header {
+      justify-content: flex-end;
+    }
   }
 }
 

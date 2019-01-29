@@ -4,10 +4,16 @@
     </div>
     <div v-swiper:swiper="swiperOption">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" :key="s._uid" v-for="s in blok.slides" :style="{ 'background-image': 'url(' + $resizeImage(s.image, '1600x0') + ')' }">
-          <div class="wrapper">
-            <span class="title" :class="{ 'dark': s.dark }">{{s.title}}</span>
-          </div>
+        <div class="swiper-slide"
+          :key="s._uid" v-for="s in blok.slides"
+          :style="{ 'background-image': 'url(' + $resizeImage(s.image, '1600x0') + ')' }"
+          >
+          <sb-link :link="s.link">
+            <div class="wrapper">
+              <span class="title" v-if="s.title">{{s.title}}</span>
+              <span class="teaser" v-if="s.teaser">{{s.teaser}}</span>
+            </div>
+          </sb-link>
         </div>
       </div>
       <div class="swiper-pagination"></div>
@@ -68,26 +74,41 @@ export default {
       background-position: center;
       display: flex;
       align-items: flex-end;
+      a {
+        width: 100%;
+      }
       .wrapper {
         padding: 20px;
-        width: 60%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        color: #000;
+        padding-bottom: 3vw;
+        @include media-breakpoint-down(sm) {
+          padding-bottom: 6vw;
+        }
+        .teaser {
+          font-size: 2.0vw;
+          font-family: $font-mono;
+          @include media-breakpoint-down(sm) {
+            font-size: 2.0vh;
+          }
+        }
         .title {
-          font-size: 11.5vw;
+          font-size: 8vw;
           z-index: 9;
+          @include media-breakpoint-down(sm) {
+            font-size: 8vh;
+          }
         }
         .teaser,
         .title {
+          max-width: 100%;
+          background-color: #FFF;
           margin-bottom: 5px;
           padding: 5px 10px;
           display: block;
-          color: #000;
           font-weight: bold;
-          &.dark {
-            color: #FFF;
-          }
         }
       }
     }

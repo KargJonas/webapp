@@ -25,6 +25,9 @@ export default {
 
 .faq-block {
   display: flex;
+  @include media-breakpoint-down(sm) {
+    flex-direction: column-reverse;
+  }
   align-items: flex-start;
   @include margin-page-middle();
   .downloads {
@@ -44,6 +47,7 @@ export default {
 
   .faqs {
     flex: 4;
+    margin-bottom: 3vh;
   }
 }
 </style>

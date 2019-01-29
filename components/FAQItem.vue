@@ -116,10 +116,19 @@ $faq-margin-left: 2em;
         color: #000;
       }
     }
+    @include media-breakpoint-down(sm) {
+      padding: 2vh 0;
+      .title {
+        font-size: 1.1em;
+      }
+    }
   }
   .content {
     line-height: 1.4;
     margin-left: $faq-margin-left;
+    @include media-breakpoint-down(sm) {
+      margin-left: 0;
+    }
     .image {
       width: 100%;
       display: block;

@@ -5,13 +5,22 @@
     </div>
     <div v-else>
       <div class="header-item">
-        <div class="headline">Werde GRAND GARAGE Mitglied</div>
-        <div class="subtitle" @click="login">
-          Bereits Mitglied? Zum Login.
+        <div class="space">
+          <div class="headline">Werde GRAND GARAGE Mitglied</div>
+          <div class="subtitle" @click="login">
+            Bereits Mitglied? Zum Login.
+          </div>
+          <div class="info">
+            Werde Teil einer lebendigen Community aus Kreativen, Makern und Start-ups!
+            Ob Professional oder Starter – such' dir ganz einfach die für dich passende Mitgliedschaft aus und erhalte Zugang zur GRAND GARAGE.
+          </div>
         </div>
-        <div class="info">
-          Werde Teil einer lebendigen Community aus Kreativen, Makern und Start-ups!
-          Ob Professional oder Starter – such' dir ganz einfach die für dich passende Mitgliedschaft aus und erhalte Zugang zur GRAND GARAGE.
+        <div class="close" @click="close">
+          <svg class="close-icon" viewBox="0 0 32 32">
+            <g>
+              <path d="M 5.5488281 3.8535156 A 2.0002 2.0002 0 0 0 4.15625 7.2890625 L 13.388672 16.519531 L 4.15625 25.751953 A 2.0002 2.0002 0 1 0 6.984375 28.580078 L 16.216797 19.347656 L 25.449219 28.580078 A 2.0002 2.0002 0 1 0 28.277344 25.751953 L 19.044922 16.519531 L 28.277344 7.2890625 A 2.0002 2.0002 0 0 0 26.824219 3.8554688 A 2.0002 2.0002 0 0 0 25.449219 4.4589844 L 16.216797 13.691406 L 6.984375 4.4589844 A 2.0002 2.0002 0 0 0 5.5488281 3.8535156 z " />
+            </g>
+          </svg>
         </div>
       </div>
       <div class="form-item">
@@ -45,22 +54,28 @@
         <div class="checkbox-wrapper">
           <input type="checkbox" id="agb" v-model="agb" />
         </div>
-        <label for="agb">Ich habe die <nuxt-link :to="'/agb'">Teilnahmebedingungen / AGB</nuxt-link> gelesen und bin damit einverstanden.</label>
+        <label for="agb">Ich habe die <nuxt-link to="/de/agb">Teilnahmebedingungen / AGB</nuxt-link> gelesen und bin damit einverstanden.</label>
       </div>
       <div class="checkbox-item">
         <div class="checkbox-wrapper">
           <input type="checkbox" id="dsg" v-model="dsg" />
         </div>
-        <label for="dsg">Ich habe die <nuxt-link :to="'/datenschutz'">Datenschutzerklärung</nuxt-link> gelesen und bin damit einverstanden.</label>
+        <label for="dsg">Ich habe die <nuxt-link to="/de/datenschutzerklaerung">Datenschutzerklärung</nuxt-link> gelesen und bin damit einverstanden.</label>
       </div>
+      <!--
       <div class="checkbox-item">
         <div class="checkbox-wrapper">
           <input type="checkbox" id="newsletter" v-model="newsletter" />
         </div>
         <label for="newsletter">Ich bin damit einverstanden, Newsletter an meine angegebene E-Mail Adresse zu erhalten.</label>
       </div>
+      -->
       <div class="form-item error-message" v-if="errorMessage">
-        <span>{{errorMessage}}</span>
+        <span></span>
+        <div>
+          <span>{{errorMessage}}</span>
+          <markdown class="policy" v-if="errorDescription" :value="errorDescription"></markdown>
+        </div>
       </div>
       <div class="form-item button-row">
         <button :disabled="!formValid" @click="submit">Registrieren</button>
@@ -86,6 +101,7 @@ export default {
       dsg: false,
       newsletter: false,
       errorMessage: null,
+      errorDescription: '',
       loading: false,
     }
   },
@@ -107,6 +123,9 @@ export default {
     }
   },
   methods: {
+    close() {
+      this.$store.dispatch('setSidebar', null);
+    },
     submit() {
       this.loading = true;
       let data = {
@@ -133,8 +152,7 @@ export default {
               break;
             case 'invalid_password':
               this.errorMessage = 'Das Passwort ist zu schwach.';
-              // not displaying policy, but printing to console
-              console.log(e.policy);
+              this.errorDescription = e.policy;
               break;
             default:
               this.errorMessage = 'Ein Fehler ist aufgetreten: "' + e.code + '"';
@@ -148,6 +166,7 @@ export default {
     },
     clearError() {
       this.errorMessage = null;
+      this.errorDescription = '';
     },
     checkName() {
       this.clearError();
@@ -166,11 +185,23 @@ export default {
 @import "@/assets/scss/styles.scss";
 
 .register-form {
-  margin: 0 -10px;
-  padding: 50px;
+  padding: 5vw;
   background-color: $color-bright-bg;
   .header-item {
+    display: flex;
     margin-bottom: 40px;
+    & > div {
+      &.space {
+        flex: 1;
+      }
+      &.close {
+        margin-left: 2em;
+        .close-icon {
+          cursor: pointer;
+          height: 1.1em;
+        }
+      }
+    }
     .headline {
       font-size: 1.4rem;
       font-weight: 700;
@@ -193,9 +224,12 @@ export default {
     }
   }
   .form-item {
-    padding: 0 0 18px;
-    display: grid;
-    grid-template-columns: 28% 72%;
+    padding: 0 0 5px;
+    @include media-breakpoint-up(sm) {
+      padding: 0 0 18px;
+      display: grid;
+      grid-template-columns: 28% 72%;
+    }
     align-items: center;
     .label {
       font-weight: bold;
@@ -206,6 +240,9 @@ export default {
       outline: none;
       flex-grow: 1;
       padding: 5px 10px;
+      @include media-breakpoint-down(xs) {
+        margin: 1vh 0;
+      }
       background: #fff;
       border: 1px solid #fff;
       width: 100%;
@@ -233,6 +270,7 @@ export default {
     &.button-row {
       display: flex;
       justify-content: flex-end;
+      margin-bottom: 80px; // fix for some strange ios safari error
     }
     button {
       background-color: $color-orange;
@@ -283,6 +321,24 @@ export default {
   }
   .error-message {
     color: red;
+    .policy {
+      font-size: 0.8em;
+      color: #333;
+      > ul {
+        list-style-type: circle;
+        padding: 0 0 0 1em;
+        > li {
+          margin: .4em 0 0 0;
+          > ul {
+            padding: 0 0 0 1em;
+            list-style-type: circle;
+            > li {
+              margin: .4em 0 0 0;
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>

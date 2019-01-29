@@ -7,14 +7,12 @@
         </h2>
       </div>
       <div class="row">
-        <div class="col-image">
-          <img :src="blok.image" alt=""/>
-        </div>
-        <div class="col-text">
+        <div class="text">
           <markdown :value="blok.text"></markdown>
-          <div class="register-button">
-            <button @click="register">Jetzt Mitglied werden</button>
+          <div class="image">
+            <img :src="$resizeImage(blok.image, '500x0')" alt=""/>
           </div>
+
         </div>
       </div>
     </div>
@@ -27,6 +25,11 @@ export default {
   methods: {
     register() {
       this.$store.dispatch('setSidebar', 'register');
+    }
+  },
+  computed: {
+    noUser() {
+      return !this.$store.state.user;
     }
   }
 }
@@ -53,15 +56,17 @@ export default {
     }
     .row {
       display: flex;
-      .col-image {
+      flex-direction: column;
+      .image {
         flex: 1;
         img {
           display: block;
           max-width: 100%;
           height: auto;
+          max-height: 30vh;
         }
       }
-      .col-text {
+      .text {
         flex: 2;
         padding: 0 5%;
         p {
@@ -74,11 +79,13 @@ export default {
           button {
             outline: none;
             cursor: pointer;
+            font-size: 1.2em;
             font-weight: bold;
             color: #FFF;
             border: none;
             padding: 15px;
             background-color: $color-orange;
+            margin: 1em 0;
           }
         }
       }

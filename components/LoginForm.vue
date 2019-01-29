@@ -1,9 +1,18 @@
 <template>
   <div class="login-form">
     <div class="header-item">
-      <div class="headline">Login für GRAND GARAGE Mitglieder</div>
-      <div class="subtitle" @click="register">
-        Noch kein Mitglied? Hier anmelden.
+      <div class="space">
+        <div class="headline">Login für GRAND GARAGE Mitglieder</div>
+        <div class="subtitle" @click="register">
+          Noch kein Mitglied? Hier anmelden.
+        </div>
+      </div>
+      <div class="close" @click="close">
+        <svg class="close-icon" viewBox="0 0 32 32">
+          <g>
+            <path d="M 5.5488281 3.8535156 A 2.0002 2.0002 0 0 0 4.15625 7.2890625 L 13.388672 16.519531 L 4.15625 25.751953 A 2.0002 2.0002 0 1 0 6.984375 28.580078 L 16.216797 19.347656 L 25.449219 28.580078 A 2.0002 2.0002 0 1 0 28.277344 25.751953 L 19.044922 16.519531 L 28.277344 7.2890625 A 2.0002 2.0002 0 0 0 26.824219 3.8554688 A 2.0002 2.0002 0 0 0 25.449219 4.4589844 L 16.216797 13.691406 L 6.984375 4.4589844 A 2.0002 2.0002 0 0 0 5.5488281 3.8535156 z " />
+          </g>
+        </svg>
       </div>
     </div>
     <div class="form-item">
@@ -36,6 +45,9 @@ export default {
   computed: {
   },
   methods: {
+    close() {
+      this.$store.dispatch('setSidebar', null);
+    },
     register() {
       this.$store.dispatch('setSidebar', 'register');
     },
@@ -45,7 +57,6 @@ export default {
         password: this.password
       }
       this.$store.dispatch('loginUser', data).then((r) => {
-        console.log(r);
       }).catch((e) => {
         this.errorMessage = e.description || e.error || e.code;
       });
@@ -61,11 +72,23 @@ export default {
 @import "@/assets/scss/styles.scss";
 
 .login-form {
-  margin: 0 -10px;
-  padding: 50px;
+  padding: 5vw;
   background-color: $color-bright-bg;
   .header-item {
     margin-bottom: 40px;
+    display: flex;
+    & > div {
+      &.space {
+        flex: 1;
+      }
+      &.close {
+        margin-left: 2em;
+        .close-icon {
+          cursor: pointer;
+          height: 1.1em;
+        }
+      }
+    }
     .headline {
       font-size: 1.4rem;
       font-weight: 700;
@@ -85,7 +108,9 @@ export default {
   .form-item {
     padding: 0 0 18px;
     display: grid;
-    grid-template-columns: 28% 72%;
+    @include media-breakpoint-up(sm) {
+      grid-template-columns: 28% 72%;
+    }
     align-items: center;
     .label {
       font-weight: bold;
@@ -97,6 +122,9 @@ export default {
       border: 1px solid #fff;
       flex-grow: 1;
       padding: 5px 10px;
+      @include media-breakpoint-down(xs) {
+        margin: 1vh 0;
+      }
       &:focus {
         border-color: $color-orange;
       }

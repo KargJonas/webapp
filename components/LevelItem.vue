@@ -67,11 +67,14 @@ export default {
     }
 
     .arrow {
-      min-width: 130px;
+      width: 180px;
     }
   }
   &.active {
     box-shadow: 10px 0 0 $color-blue;
+    &:hover {
+      box-shadow: 10px 0 0 $color-blue;
+    }
   }
   &:hover {
     box-shadow: 10px 0 0 $color-yellow;
@@ -79,14 +82,11 @@ export default {
   }
 }
 
-@media (min-width: 420px) {
+@media (max-width: 460px) {
   .level-item {
     .text {
-      .arrow {
-        width: 180px;
-      }
+      display: none;
     }
   }
 }
 </style>
-
